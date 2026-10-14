@@ -112,5 +112,4 @@ The expected columns are `title_text` and `fake_news`; the recorded split sizes 
 - The included Assignment 1 dataset is synthetic and contains fictional observations rather than real personal data.
 - Course instructions, instructor solution notes, and private study notes remain excluded pending confirmation of redistribution permission.
 - The Assignment 2 input CSV files are not present and remain excluded unless their redistribution terms permit publication.
-- No credentials, API keys, or authentication tokens were found.
 - The locally preserved submitted versions are not tracked; the repository exposes one portable, authoritative code file per assignment.
