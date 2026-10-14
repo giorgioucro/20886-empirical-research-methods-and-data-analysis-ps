@@ -1,0 +1,107 @@
+# 20886 - Empirical Research Methods and Data Analysis
+
+## Repository overview
+
+This repository contains two assignments from Bocconi University's **20886 - Empirical Research Methods and Data Analysis** course (M.Sc. Economic and Social Sciences, 2025/26). The coursework covers missing-data handling, inference for group differences, cluster-randomized study design, and supervised text classification. The repository preserves the submitted analytical workflow while providing portable copies of the runnable code.
+
+Course-provided instructions, the Assignment 1 solution note, and the input datasets are retained locally but are not included in the public Git index because redistribution permission has not been established. This conservative exclusion does not imply that the materials are confidential; it separates access for coursework from permission to republish them.
+
+## Assignment 1 - Stata
+
+Assignment 1 studies an administrative dataset covering 444 top managers in Italian ministries. The supplied data contain demographic, education, career, ministry, and income variables. The empirical tasks are to:
+
+1. estimate the mean and standard deviation of income after single imputation by the observed mean;
+2. perform single regression imputation using demographic and education predictors;
+3. compare mean income for managers below and above the 54.5-year threshold with a two-sample t-test; and
+4. explain whether sampling error applies to gender when the data cover the target population rather than a sample.
+
+The submitted script, `assignment1/20_Ucropina_Giorgio.do`, explores missingness, estimates several linear imputation models, imputes missing predictors by their modes in the final specification, and runs the age-group t-test. Its embedded result note reports group means of approximately 141,515.0 and 167,374.6, a young-minus-old difference of -25,859.57, and a p-value close to zero. An independent Python reconstruction during repository preparation reproduced these figures, but the original Stata script was **not** executed and no claim of Stata validation is made.
+
+`assignment1/20_Ucropina_Giorgio_portable.do` is a provenance-preserving copy of the submitted script with only the hard-coded Windows data path replaced by the relative filename `Data_Public Managers.dta`. The original script remains available for comparison. The dataset itself is excluded from the public repository because it contains names linked to employment and income attributes and because public redistribution rights for the course-provided file have not been confirmed.
+
+Running either `.do` file requires an appropriately licensed Stata installation. The portable copy also requires the original dataset to be placed in `assignment1/` and Stata's working directory to be set to that folder.
+
+## Assignment 2 - Python and supervised text classification
+
+Assignment 2 uses modified training and test subsets of a fake-news dataset. Each observation contains combined article title/text and a binary label (`0` for real, `1` for fake). The notebook:
+
+- lowercases text, removes URLs and non-letter characters, filters English stop words, and tokenizes the remaining text;
+- fits a TF-IDF vocabulary on the training set only and transforms both splits;
+- trains logistic regression, an RBF support-vector classifier, and a random forest selected by three-fold grid search;
+- evaluates accuracy, ROC-AUC, PR-AUC, and confusion matrices; and
+- reports the random forest's 20 most important terms.
+
+The stored notebook outputs report a vocabulary of 12,058 terms. On the supplied 300-row test set, the recorded results are:
+
+| Model | Accuracy | ROC-AUC | PR-AUC |
+|---|---:|---:|---:|
+| Logistic regression | 0.963 | 0.987 | 0.988 |
+| RBF SVC | 0.967 | 0.989 | 0.989 |
+| Tuned random forest | 0.960 | 0.993 | 0.994 |
+
+Thus, the SVC has the highest recorded accuracy, while the tuned random forest has the highest recorded ROC-AUC and PR-AUC. The original notebook outputs also identify `said`, `video`, `image`, and `featured` among the leading random-forest features.
+
+`assignment2/code_portable.ipynb` retains the submitted cells and stored outputs. Its two data paths use the repository-relative `assignment2/data/` directory, its kernel metadata targets a generic Python 3 kernel, and the feature-importance cell calls `plt.tight_layout()` correctly. The original notebook is retained locally but excluded from Git because it duplicates the portable copy and embeds a personal absolute Windows path.
+
+## Repository structure
+
+```text
+20886-empirical-research-methods-and-data-analysis-ps/
+|-- .gitignore
+|-- README.md
+|-- requirements.txt
+|-- assignment1/
+|   |-- 20_Ucropina_Giorgio.do
+|   `-- 20_Ucropina_Giorgio_portable.do
+`-- assignment2/
+    `-- code_portable.ipynb
+```
+
+- `.gitignore` excludes machine state and specific local-only course materials; it does not blanket-ignore Stata, PDF, or data formats.
+- `requirements.txt` lists only the Python/Jupyter packages used by Assignment 2.
+- `assignment1/20_Ucropina_Giorgio.do` is the unchanged submitted Stata source.
+- `assignment1/20_Ucropina_Giorgio_portable.do` is the relative-path copy intended for reproduction.
+- `assignment2/code_portable.ipynb` is the portable notebook with the original analysis and recorded outputs.
+
+## Reproducibility
+
+### Assignment 1
+
+1. Obtain `Data_Public Managers.dta` through an authorized source and place it in `assignment1/`.
+2. Open Stata, set the working directory to `assignment1/`, and run:
+
+   ```stata
+   do "20_Ucropina_Giorgio_portable.do"
+   ```
+
+The script produces results in the Stata Results window and does not save modified data or generated output files. Stata was unavailable during repository preparation, so the `.do` file was inspected rather than executed. Its data dependency, variable names, missingness logic, regression specifications, and documented t-test figures were cross-checked with Python against the local `.dta` file.
+
+### Assignment 2
+
+Use Python 3.11 or newer. From the repository root, create and activate a virtual environment if desired, then install the dependencies:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Obtain the modified course datasets through an authorized source and place them at:
+
+```text
+assignment2/data/fake_news_train.csv
+assignment2/data/fake_news_test.csv
+```
+
+Start Jupyter from the repository root:
+
+```bash
+jupyter notebook assignment2/code_portable.ipynb
+```
+
+The expected columns are `title_text` and `fake_news`; the recorded split sizes are 2,000 training rows and 300 test rows. All required Python imports were verified with Python 3.13.5, but end-to-end re-execution was not possible because the two CSV inputs are not present in the repository or at the notebook's former local paths. The notebook's stored outputs are preserved as evidence of the submitted run.
+
+## Publication and provenance notes
+
+- No credentials, API keys, or authentication tokens were found.
+- The local Assignment 1 dataset contains directly identifying names linked to professional and income data. The assignment states that the source information is public under Italian transparency law, but that statement alone does not establish permission to redistribute the compiled course dataset on GitHub.
+- Assignment PDFs and the instructor solution note remain local pending confirmation that course materials may be republished.
+- `Notes_FSS_assignment_1[1].do` is a readable Stata study-notes script, not a binary artifact or required input. It duplicates much of the submitted workflow, includes TA/course guidance, and contains a gender-code comment that conflicts with the assignment legend. It is therefore retained locally but intentionally excluded from the public repository.

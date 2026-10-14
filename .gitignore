@@ -1,0 +1,28 @@
+# Operating-system and editor metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+
+# Python and Jupyter local state
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# Local-only source materials retained pending redistribution permission
+/assignment1/assignment1_instructions.pdf
+/assignment1/explanatory_note.pdf
+/assignment1/Data_Public Managers.dta
+/assignment1/Notes_FSS_assignment_1\[1\].do
+/assignment2/assignment2_instructions.pdf
+
+# Superseded local submission copy with personal absolute paths
+/assignment2/code.ipynb
+
+# Course-provided inputs are not present and should not be published without permission
+/assignment2/data/fake_news_train.csv
+/assignment2/data/fake_news_test.csv
