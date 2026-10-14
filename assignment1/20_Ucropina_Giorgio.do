@@ -1,8 +1,9 @@
-* Code Assignment 1 - Giorgio Ucropina
+* Portable copy of the submitted Assignment 1 code - Giorgio Ucropina
+* Run this file with assignment1 as Stata's working directory.
 
 * Preliminaries to see the dataset.
 
-use "C:\Users\Giorgio\OneDrive - Università Commerciale Luigi Bocconi\Desktop\Foundations of Social Sciences 1\Assignment 1\Data_Public Managers.dta", clear
+use "Data_Public Managers.dta", clear
 browse
 
 // 1st TASK: mean and sd of the income
